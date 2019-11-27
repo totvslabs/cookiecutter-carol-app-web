@@ -1,6 +1,6 @@
-# SeedCarolApp
+# {{cookiecutter.project_name}}
 
-This project can be used as a seed when you want to start building a Carol app. 
+{{cookiecutter.project_short_description}}
 
 [Carol](https://docs.carol.ai) is a data platform with Machine Learning developed and maintained by [Totvs Labs](https://www.totvslabs.com/).
 
@@ -11,7 +11,7 @@ The project was generated with [Angular CLI](https://github.com/angular/angular-
 ### Included Features/Configurations
 
 1. Ability to easily change the target Tenant. For this edit the file `proxy.conf.json` in the root of the project.
-2. Authentication page. 
+2. Authentication page.
 3. An interceptor that will automatically add the auth token in every HTTP request.
 4. THF is ready to use.
 5. A script that will connect to your tenant, download the Data Models schema and generate Typescript classes so you have typings in the FE.
@@ -21,11 +21,9 @@ The project was generated with [Angular CLI](https://github.com/angular/angular-
 
 1. Install [Node.js](https://nodejs.org/en/download/)
 2. Clone this repo `git clone https://github.com/totvslabs/carolapp-std-tface`
-3. Install Angular as a global dependency: `npm install -g @angular/cli`
-4. Install the project dependencies: `npm install`
-5. Set your tenant in the file `proxy.conf.json`
-6. Run the command `npm run update-datamodels` to generate the classes for the data models available in your tenant
-7. Start coding
+3. Install the project dependencies: `make install`
+4. Run the command `make datamodels` to generate the classes for the data models available in your tenant (Needs a Carol user and password)
+5. Start coding
 
 ### How to GET data from Carol
 
@@ -35,7 +33,7 @@ Inject the Carol service:
 
 ```javascript
   import { Carol } from 'src/app/services/carol.service';
-  
+
   constructor(
     private carol: Carol
   ) {}
@@ -59,7 +57,7 @@ To save a Golden record you can also use the Carol service:
 ```javascript
   const customer = new Customer();
   customer.mdmGoldenFieldAndValues.mdmname = 'John';
-  
+
   this.carol.postGolden(Customer, customer.mdmGoldenFieldAndValues)
       .subscribe(response => {
         ...
@@ -67,10 +65,11 @@ To save a Golden record you can also use the Carol service:
 ```
 
 To update a golden record:
+
 ```javascript
   const customer: Customer;
   customer.mdmGoldenFieldAndValues.mdmname = 'John';
-  
+
   this.carol.updateGolden(Customer, customer.mdmId, customer.mdmGoldenFieldAndValues)
       .subscribe(response => {
         ...
@@ -78,9 +77,10 @@ To update a golden record:
 ```
 
 To delete a golden record:
+
 ```javascript
   const customer: Customer;
-    
+
   this.carol.deleteGolden(Customer, customer.mdmId).subscribe(response => ...);
 ```
 

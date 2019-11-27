@@ -5,7 +5,8 @@
     "project_name": "Carol App Boilerplate",
     "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
     "project_short_description": "Carol App Web Boilerplate contains all the boilerplate you need to create a Carol App.",
-    "carol_app_tenant": "newapp",
+    "carol_app_organization": "neworg",
+    "carol_app_environment": "newenv",
     "version": "0.1.0",
     "_copy_without_render": [
         "*.html",

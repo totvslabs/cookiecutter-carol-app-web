@@ -1,6 +1,11 @@
 {
-  "name": "seed-carol-app",
-  "version": "0.0.0",
+  "name": "{{cookiecutter.project_slug}}",
+  "version": "{{cookiecutter.version}}",
+  "author": {
+      "name": "{{ cookiecutter.user_full_name }}",
+      "email": "{{ cookiecutter.user_email }}",
+      "url": "https://github.com/{{cookiecutter.github_username}}"
+  },
   "scripts": {
     "ng": "ng",
     "update-model": "node ./node_modules/@carol/carol-sdk/src/update-model",
