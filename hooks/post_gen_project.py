@@ -14,7 +14,7 @@ def post_ga_data():
     params = urllib.parse.urlencode({
         'v': 1,
         'tid': 'UA-136298016-1',
-        'uid': '{{ cookiecutter.email }}',
+        'uid': '{{ cookiecutter.user_email }}',
         't' : 'event',
         'ec': 'carol_cookiecuter',
         'ea': 'new_web_project',

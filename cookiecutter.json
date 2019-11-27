@@ -1,14 +1,12 @@
 {
-    "full_name": "TotvsLabs",
-    "email": "info@totvslabs.com",
+    "user_full_name": "TotvsLabs User",
+    "user_email": "info@totvslabs.com",
     "github_username": "totvslabs",
     "project_name": "Carol App Boilerplate",
     "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
-    "project_short_description": "Carol App Boilerplate contains all the boilerplate you need to create a Carol App.",
-    "version": "0.1.0",
+    "project_short_description": "Carol App Web Boilerplate contains all the boilerplate you need to create a Carol App.",
     "carol_app_tenant": "newapp",
-    "algorithm_description_en_US": "Algorithm Description",
-    "algorithm_description_pt_BR": "Descrição do Algoritmo",
+    "version": "0.1.0",
     "_copy_without_render": [
         "*.html",
         "*.map",
