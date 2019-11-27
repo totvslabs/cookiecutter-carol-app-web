@@ -14,23 +14,26 @@ def post_ga_data():
     params = urllib.parse.urlencode({
         'v': 1,
         'tid': 'UA-136298016-1',
-        'uid': '{{ cookiecutter.email }}',
+        'uid': '{{ cookiecutter.user_email }}',
         't' : 'event',
         'ec': 'carol_cookiecuter',
         'ea': 'new_web_project',
         'el': 'carol_web_app',
-        'cd1': 'tenant',
-        'cm1': '{{ cookiecutter.carol_app_tenant }}',
-        'cd2': 'project',
-        'cm2': '{{ cookiecutter.project_name }}',
-        'cd3': 'os',
-        'cm3': platform.system(),
-        'cd4': 'python_version',
-        'cm4': platform.python_version()
+        'cd1': 'organizatino',
+        'cm1': '{{ cookiecutter.carol_app_organization }}',
+        'cd2': 'environment',
+        'cm2': '{{ cookiecutter.carol_app_environment }}',
+        'cd3': 'project',
+        'cm3': '{{ cookiecutter.project_name }}',
+        'cd4': 'os',
+        'cm4': platform.system(),
     })
 
-    connection = http.client.HTTPConnection('www.google-analytics.com')
-    connection.request('POST', '/collect', params)
+    try:
+        connection = http.client.HTTPConnection('www.google-analytics.com')
+        connection.request('POST', '/collect', params)
+    except Exception as e:
+        print(e)
 
 post_ga_data()
 
