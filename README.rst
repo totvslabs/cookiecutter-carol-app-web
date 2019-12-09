@@ -27,7 +27,7 @@ Cookiecutter 1.4.0 or higher)::
 
 Generate a Python package project::
 
-    cookiecutter https://github.com/totvslabs/cookiecutter-carol-app.git
+    cookiecutter https://github.com/totvslabs/cookiecutter-carol-app-web.git
 
 Then:
 
