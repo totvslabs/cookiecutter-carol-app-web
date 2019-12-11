@@ -19,7 +19,7 @@ def post_ga_data():
         'ec': 'carol_cookiecuter',
         'ea': 'new_web_project',
         'el': 'carol_web_app',
-        'cd1': 'organizatino',
+        'cd1': 'organization',
         'cm1': '{{ cookiecutter.carol_app_organization }}',
         'cd2': 'environment',
         'cm2': '{{ cookiecutter.carol_app_environment }}',
