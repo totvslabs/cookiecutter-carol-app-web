@@ -3,21 +3,22 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "{{cookiecutter.project_slug}}": {
+    "seed-carol-app": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
       "prefix": "app",
       "schematics": {
         "@schematics/angular:component": {
-          "styleext": "scss"
+          "style": "scss"
         }
       },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/{{cookiecutter.project_slug}}",
+            "aot": true,
+            "outputPath": "dist/seed-carol-app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -28,8 +29,7 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/@progress/kendo-theme-default/dist/all.css",
-              "node_modules/@totvs/thf-theme/css/thf-theme-default.min.css",
+              "./node_modules/@po-ui/style/css/po-theme-default.min.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -56,6 +56,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             }
@@ -64,19 +68,19 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "{{cookiecutter.project_slug}}:build",
+            "browserTarget": "seed-carol-app:build",
             "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {
-              "browserTarget": "{{cookiecutter.project_slug}}:build:production"
+              "browserTarget": "seed-carol-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "{{cookiecutter.project_slug}}:build"
+            "browserTarget": "seed-carol-app:build"
           }
         },
         "test": {
@@ -87,6 +91,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
+              "./node_modules/@po-ui/style/css/po-theme-default.min.css",
               "src/styles.scss"
             ],
             "scripts": [],
@@ -110,7 +115,7 @@
         }
       }
     },
-    "{{cookiecutter.project_slug}}-e2e": {
+    "seed-carol-app-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -119,11 +124,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "{{cookiecutter.project_slug}}:serve"
+            "devServerTarget": "seed-carol-app:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "{{cookiecutter.project_slug}}:serve:production"
+              "devServerTarget": "seed-carol-app:serve:production"
             }
           }
         },
@@ -139,5 +144,5 @@
       }
     }
   },
-  "defaultProject": "{{cookiecutter.project_slug}}"
+  "defaultProject": "seed-carol-app"
 }

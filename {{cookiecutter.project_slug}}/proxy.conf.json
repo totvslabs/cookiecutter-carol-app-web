@@ -1,9 +1,9 @@
 {
   "connectorId": "0a0829172fc2433c9aa26460c31b78f0",
-  "organization": "{{ cookiecutter.carol_app_organization }}",
-  "environment": "{{ cookiecutter.carol_app_environment }}",
+  "organization": "totvsdevelop",
+  "environment": "totvslabsdevelop",
   "/api/*": {
-      "target": "https://{{ cookiecutter.carol_app_organization }}.carol.ai",
+      "target": "https://totvsdevelop.qarol.ai",
       "secure": true,
       "logLevel": "debug",
       "changeOrigin": true
