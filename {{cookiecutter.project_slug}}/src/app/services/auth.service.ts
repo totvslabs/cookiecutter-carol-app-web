@@ -1,22 +1,27 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { carol } from '@carol/carol-sdk/lib/carol';
-import { ThfToolbarProfile } from '@totvs/thf-ui/components/thf-toolbar';
-import * as moment from 'moment';
+import {
+  HttpClient,
+  HttpHeaderResponse,
+  HttpHeaders,
+} from '@angular/common/http';
+import { Injectable, isDevMode } from '@angular/core';
+import { PoToolbarProfile } from '@po-ui/ng-components';
 import { Observable, Observer } from 'rxjs';
-import { utils } from '@carol/carol-sdk/lib/utils';
+
+import * as conf from '../../../proxy.conf.json';
+import { UtilsService } from './utils.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  sessionObservable: Observable<ThfToolbarProfile> ;
-  sessionObserver: Observer<ThfToolbarProfile> ;
+  sessionObservable: Observable<PoToolbarProfile>;
+  sessionObserver: Observer<PoToolbarProfile>;
 
   constructor(
-    private router: Router
+    private utilsService: UtilsService,
+    private httpClient: HttpClient
   ) {
-    this.sessionObservable = new Observable(observer => {
+    this.sessionObservable = new Observable((observer) => {
       this.sessionObserver = observer;
 
       if (localStorage.getItem('user')) {
@@ -25,66 +30,67 @@ export class AuthService {
     });
   }
 
-  login(username, password) {
-    return carol.login(username, password).then(response => {
-      this.setSession(response, username);
-      return response;
-    });
-  }
-
   setSession(authResult, user) {
-    carol.setAuthToken(authResult['access_token']);
-
     const tokenName = this.getTokenName();
 
     localStorage.setItem(tokenName, authResult['access_token']);
     localStorage.setItem('user', user);
 
-    const expiresAt = moment().add(authResult['expires_in'], 'second');
-    localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
-
     this.sessionObserver.next(this.buildProfile());
   }
 
   getTokenName() {
-    if (utils.getOrganization()) {
-      return `carol-${utils.getOrganization()}-${utils.getEnvironment()}-token`;
+    if (this.utilsService.getOrganization()) {
+      return `carol-${this.utilsService.getOrganization()}-${this.utilsService.getEnvironment()}-token`;
     } else {
       return 'carol-token';
     }
   }
 
-  getSession(): Observable < any > {
+  getSession(): Observable<any> {
     return this.sessionObservable;
   }
 
   logout() {
-    return carol.logout().then(() => {
-      localStorage.clear();
+    const token = localStorage.getItem(this.getTokenName());
 
-      this.router.navigate(['login']);
-    });
+    const body = {
+      access_token: token,
+    };
+
+    this.httpClient
+      .post('/api/v1/oauth2/logout', body, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      })
+      .subscribe(() => {
+        localStorage.clear();
+        this.goToLogin(true);
+      });
   }
 
-  isLoggedIn() {
-    return moment().isBefore(this.getExpiration());
-  }
-
-  isLoggedOut() {
-    return !this.isLoggedIn();
-  }
-
-  getExpiration() {
-    const expiration = localStorage.getItem('expires_at');
-    const expiresAt = JSON.parse(expiration);
-    return moment(expiresAt);
-  }
-
-  buildProfile(): ThfToolbarProfile {
+  buildProfile(): PoToolbarProfile {
     return {
       avatar: 'assets/images/avatar-24x24.png',
-      title: localStorage.getItem('user')
+      title: localStorage.getItem('user'),
     };
   }
-}
 
+  goToLogin(logout = false) {
+    let origin;
+    let url;
+
+    if (isDevMode()) {
+      let redirect = encodeURI(location.origin + location.pathname);
+      origin = conf['/api/*'].target;
+      url = `${origin}/auth/?redirect=${redirect}&env=${this.utilsService.getEnvironment()}&org=${this.utilsService.getOrganization()}&logout=${logout}`;
+    } else {
+      let redirect = encodeURI(location.pathname);
+      origin = location.origin;
+      url = `${origin}/auth/?redirect=${redirect}&env=${this.utilsService.getEnvironment()}&org=${this.utilsService.getOrganization()}&logout=${logout}`;
+    }
+
+    window.open(url, '_self');
+  }
+}

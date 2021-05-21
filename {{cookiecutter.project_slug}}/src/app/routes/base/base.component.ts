@@ -1,34 +1,34 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { ThfToolbarProfile, ThfToolbarAction } from '@totvs/thf-ui';
 import { Observable } from 'rxjs';
+import { PoToolbarProfile, PoToolbarAction } from '@po-ui/ng-components';
 
 @Component({
   selector: 'app-base',
-  templateUrl: './base.component.html'
+  templateUrl: './base.component.html',
 })
 export class BaseComponent {
-
   menus = [
-    { label: 'Home', link: './' },
+    { label: 'Page 1', link: './' },
+    { label: 'Page 2', link: './' },
+    { label: 'Page 3', link: './' },
+    { label: 'Page 4', link: './' },
+    { label: 'Page 5', link: './' },
   ];
 
-  profile: Observable<ThfToolbarProfile>;
+  profile: Observable<PoToolbarProfile>;
 
-  profileActions: Array<ThfToolbarAction> = [
+  profileActions: Array<PoToolbarAction> = [
     {
-      icon: 'thf-icon-exit',
+      icon: 'po-icon-exit',
       label: 'Exit',
       type: 'danger',
       separator: true,
-      action: item => this.authService.logout()
-    }
+      action: (item) => this.authService.logout(),
+    },
   ];
 
-  constructor(
-    private authService: AuthService,
-  ) {
+  constructor(private authService: AuthService) {
     this.profile = this.authService.sessionObservable;
   }
-
 }
