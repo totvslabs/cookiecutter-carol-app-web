@@ -3,9 +3,9 @@
   "organization": "{{ cookiecutter.carol_app_organization }}",
   "environment": "{{ cookiecutter.carol_app_environment }}",
   "/api/*": {
-      "target": "https://{{ cookiecutter.carol_app_organization }}.carol.ai",
-      "secure": true,
-      "logLevel": "debug",
-      "changeOrigin": true
+    "target": "https://{{ cookiecutter.carol_app_organization }}.carol.ai",
+    "secure": true,
+    "logLevel": "debug",
+    "changeOrigin": true
   }
 }
